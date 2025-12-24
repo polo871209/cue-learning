@@ -4,11 +4,12 @@ import apps "cue.dev/x/k8s.io/api/apps/v1"
 
 // Config defines the required configuration for a deployment
 #Config: {
-	name:      string
-	namespace: string & !="default"
-	image:     string
-	replicas:  *1 | int
-	appLabel:  string | *name
+	name:               string
+	namespace:          string & !="default"
+	image:              string
+	replicas:           *1 | int
+	appLabel:           string | *name
+	serviceAccountName: string | *"default"
 }
 
 // Deployment provides a template with security best practices
@@ -38,11 +39,11 @@ import apps "cue.dev/x/k8s.io/api/apps/v1"
 				spec: {
 					// Security best practices at pod level
 					securityContext: {
-						// Run as non-root user
+						// Run as non-root user with high UID (>10000)
 						runAsNonRoot: true
-						runAsUser:    1000
-						runAsGroup:   1000
-						fsGroup:      1000
+						runAsUser:    10009
+						runAsGroup:   10009
+						fsGroup:      10009
 
 						// Restrict filesystem access
 						fsGroupChangePolicy: "OnRootMismatch"
@@ -50,6 +51,9 @@ import apps "cue.dev/x/k8s.io/api/apps/v1"
 						// Set secure sysctls (if needed, otherwise empty)
 						seccompProfile: type: "RuntimeDefault"
 					}
+
+					// Use service account (defaults to "default")
+					serviceAccountName: config.serviceAccountName
 
 					// Automatically mount service account token only if needed
 					automountServiceAccountToken: false
@@ -63,9 +67,10 @@ import apps "cue.dev/x/k8s.io/api/apps/v1"
 							// Prevent privilege escalation
 							allowPrivilegeEscalation: false
 
-							// Run as non-root
+							// Run as non-root with high UID (>10000)
 							runAsNonRoot: true
-							runAsUser:    10000
+							runAsUser:    10009
+							runAsGroup:   10009
 
 							// Drop all capabilities and only add required ones
 							capabilities: drop: ["ALL"]
@@ -87,29 +92,6 @@ import apps "cue.dev/x/k8s.io/api/apps/v1"
 							cpu:    string | *"100m"
 						}
 					}]
-
-					// Liveness and readiness probes should be defined per application
-					// Example placeholder:
-					// livenessProbe: {
-					// 	httpGet: {
-					// 		path: "/healthz"
-					// 		port: 8080
-					// 	}
-					// 	initialDelaySeconds: 30
-					// 	periodSeconds:       10
-					// }
-
-					// Volume mounts for writable directories (if needed)
-					// volumeMounts: [{
-					// 	name:      "tmp"
-					// 	mountPath: "/tmp"
-					// }]
-
-					// Volumes for writable directories (if needed)
-					// volumes: [{
-					// 	name: "tmp"
-					// 	emptyDir: {}
-					// }]
 				}
 			}
 		}
