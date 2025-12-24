@@ -1,22 +1,13 @@
 package kube
 
-// Example 1: Basic secure deployment using the template
-deployment: #SecureDeployment & {
+// Advanced deployment example with health checks, volumes, and custom resources
+#Deployment & {
 	_config: {
-		name:      "my-app"
-		namespace: "app"
-		image:     "nginx:1.27-alpine"
-		replicas:  3
-	}
-}
-
-// Example 2: Secure deployment with customizations
-advancedDeployment: #SecureDeployment & {
-	_config: {
-		name:     "api-service"
-		image:    "myregistry/api:v1.2.3"
-		replicas: 2
-		appLabel: "api-backend"
+		name:      "api-service"
+		namespace: "production"
+		image:     "myregistry/api:v1.2.3"
+		replicas:  2
+		appLabel:  "api-backend"
 	}
 
 	// Override or extend the template

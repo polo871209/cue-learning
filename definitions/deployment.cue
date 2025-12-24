@@ -4,7 +4,7 @@ import apps "cue.dev/x/k8s.io/api/apps/v1"
 
 // SecureDeployment provides a template with security best practices
 // Including non-root user, read-only filesystem, dropped capabilities, etc.
-#SecureDeployment: apps.#Deployment & {
+#Deployment: apps.#Deployment & {
 	apiVersion: "apps/v1"
 	kind:       "Deployment"
 
