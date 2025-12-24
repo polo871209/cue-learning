@@ -1,4 +1,4 @@
-module: "cue.example/kube"
+module: "github.com/polo871209/cue-learning"
 language: {
 	version: "v0.15.1"
 }

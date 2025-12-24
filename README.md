@@ -7,7 +7,7 @@ Secure Kubernetes deployment configurations using CUE with package-based imports
 ```
 .
 ├── cue.mod/
-│   └── module.cue              # Module: cue.example/kube
+│   └── module.cue              # Module: github.com/polo871209/cue-learning
 ├── definitions/                # Reusable definitions (package: definitions)
 │   └── deployment.cue          # #Config, #Deployment
 └── apps/                       # Applications (package: app)
@@ -81,7 +81,7 @@ Create `apps/my-app/deployment.cue`:
 ```cue
 package app
 
-import base "cue.example/kube/definitions"
+import base "github.com/polo871209/cue-learning/definitions"
 
 _deployment: base.#Deployment & {
     config: {
@@ -102,7 +102,7 @@ _deployment.output
 ```cue
 package app
 
-import base "cue.example/kube/definitions"
+import base "github.com/polo871209/cue-learning/definitions"
 
 _deployment: base.#Deployment & {
     config: {
@@ -124,7 +124,7 @@ Extend the deployment by merging with `output`:
 ```cue
 package app
 
-import base "cue.example/kube/definitions"
+import base "github.com/polo871209/cue-learning/definitions"
 
 _deployment: base.#Deployment & {
     config: {

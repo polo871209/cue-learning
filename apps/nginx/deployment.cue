@@ -1,6 +1,6 @@
 package app
 
-import base "cue.example/kube/definitions"
+import base "github.com/polo871209/cue-learning/definitions"
 
 _deployment: base.#Deployment & {
 	config: {

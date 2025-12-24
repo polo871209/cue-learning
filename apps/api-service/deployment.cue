@@ -1,6 +1,6 @@
 package app
 
-import base "cue.example/kube/definitions"
+import base "github.com/polo871209/cue-learning/definitions"
 
 // Advanced deployment example with health checks, volumes, and custom resources
 _deployment: base.#Deployment & {
