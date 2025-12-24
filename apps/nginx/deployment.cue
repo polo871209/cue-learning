@@ -1,10 +1,15 @@
-package kube
+package app
 
-#Deployment & {
-	_config: {
+import base "cue.example/kube/definitions"
+
+_deployment: base.#Deployment & {
+	config: {
 		name:      "secure-nginx"
 		namespace: "app"
 		image:     "nginx:1.27-alpine"
 		replicas:  3
 	}
 }
+
+// Export only the Kubernetes manifest
+_deployment.output

@@ -1,4 +1,4 @@
-module: "cue.example"
+module: "cue.example/kube"
 language: {
 	version: "v0.15.1"
 }

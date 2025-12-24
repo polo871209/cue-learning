@@ -1,8 +1,10 @@
-package kube
+package app
+
+import base "cue.example/kube/definitions"
 
 // Advanced deployment example with health checks, volumes, and custom resources
-#Deployment & {
-	_config: {
+_deployment: base.#Deployment & {
+	config: {
 		name:      "api-service"
 		namespace: "production"
 		image:     "myregistry/api:v1.2.3"
@@ -10,8 +12,8 @@ package kube
 		appLabel:  "api-backend"
 	}
 
-	// Override or extend the template
-	spec: template: spec: {
+	// Override or extend the template output
+	output: spec: template: spec: {
 		// Add writable tmp directory since we use read-only root filesystem
 		containers: [{
 			// Add environment variables
@@ -81,3 +83,6 @@ package kube
 		}]
 	}
 }
+
+// Export only the Kubernetes manifest
+_deployment.output
