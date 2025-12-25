@@ -7,13 +7,15 @@ _service: core.#Service & {
 	kind:       "Service"
 
 	metadata: {
-		name:      "secure-nginx-service"
-		namespace: "app"
-		labels: app: "secure-nginx"
+		name:      _config.name
+		namespace: _config.namespace
+		labels: _config.labels & {
+			"extra": "exmple"
+		}
 	}
 
 	spec: {
-		selector: app: "secure-nginx"
+		selector: _config.labels
 		ports: [{
 			protocol:   "TCP"
 			port:       80
@@ -22,4 +24,3 @@ _service: core.#Service & {
 		type: "ClusterIP"
 	}
 }
-

@@ -5,9 +5,9 @@ import base "github.com/polo871209/cue-learning/definitions"
 // Advanced deployment example with health checks, volumes, and custom resources
 _deployment: base.#Deployment & {
 	metadata: {
-		name:      "api-service"
-		namespace: "production"
-		labels: app: "api-backend"
+		name:      _config.name
+		namespace: _config.namespace
+		labels:    _config.labels
 	}
 
 	spec: {

@@ -4,10 +4,10 @@ import base "github.com/polo871209/cue-learning/definitions"
 
 _deployment: base.#Deployment & {
 	metadata: {
-		name:      "secure-nginx"
-		namespace: "app"
-		labels: {
-			test: "hello-world"
+		name:      _config.name
+		namespace: _config.namespace
+		labels: _config.labels & {
+			"managed-by": "cue"
 		}
 	}
 	spec: {
