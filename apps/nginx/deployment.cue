@@ -11,5 +11,3 @@ _deployment: base.#Deployment & {
 	}
 }
 
-// Export only the Kubernetes manifest
-_deployment.output

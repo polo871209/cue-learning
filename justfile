@@ -6,17 +6,17 @@ default:
 export-all:
     @cue export ./apps/... --out yaml
 
-# Export nginx deployment to YAML
+# Export nginx deployment to YAML with --- separators
 export-nginx:
-    @cue export apps/nginx/deployment.cue --out yaml
+    @cue export ./apps/nginx/. --out text --expression stream
 
-# Export api-service deployment to YAML
+# Export api-service deployment to YAML with --- separators
 export-api-service:
-    @cue export apps/api-service/deployment.cue --out yaml
+    @cue export ./apps/api-service/. --out text --expression stream
 
-# Export specific app to YAML
+# Export specific app to YAML with --- separators
 export app:
-    @cue export apps/{{app}}/deployment.cue --out yaml
+    @cue export ./apps/{{app}}/. --out text --expression stream
 
 # Validate all configurations
 validate:
@@ -30,4 +30,4 @@ validate-app app:
 
 # Dry-run apply for specific app
 dry-run app:
-    @cue export apps/{{app}}/deployment.cue --out yaml | kubectl apply --dry-run=client -f -
+    @cue export ./apps/{{app}}/. --out text --expression stream | kubectl apply --dry-run=client -f -
