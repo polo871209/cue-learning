@@ -4,7 +4,7 @@ import "encoding/yaml"
 
 // Collect all Kubernetes resources into a list
 _resources: [
-	_deployment.output,
+	_deployment,
 	_service,
 ]
 

@@ -3,11 +3,17 @@ package app
 import base "github.com/polo871209/cue-learning/definitions"
 
 _deployment: base.#Deployment & {
-	config: {
+	metadata: {
 		name:      "secure-nginx"
 		namespace: "app"
-		image:     "nginx:1.27-alpine"
-		replicas:  3
+		labels: {
+			test: "hello-world"
+		}
+	}
+	spec: {
+		replicas: 3
+		template: spec: containers: [{
+			image: "nginx:1.27-alpine"
+		}]
 	}
 }
-
