@@ -12,8 +12,30 @@ _deployment: base.#Deployment & {
 	}
 	spec: {
 		replicas: 3
-		template: spec: containers: [{
-			image: "nginx:1.27-alpine"
-		}]
+		template: spec: {
+			containers: [{
+				image: "nginx:1.27-alpine"
+				volumeMounts: [
+					{
+						name:      "cache"
+						mountPath: "/var/cache/nginx"
+					},
+					{
+						name:      "run"
+						mountPath: "/var/run"
+					},
+				]
+			}]
+			volumes: [
+				{
+					name: "cache"
+					emptyDir: {}
+				},
+				{
+					name: "run"
+					emptyDir: {}
+				},
+			]
+		}
 	}
 }
